@@ -1,19 +1,29 @@
-from selenium.webdriver.common.by import By
 from selenium.webdriver.remote.webdriver import WebDriver
 from selenium.webdriver.remote.webelement import WebElement
 from ContextHolder import ContextHolder
-from elements import BaseElement
+from bots.ActionBot import ActionBot
+from bots.VerifyBot import VerifyBot
+from elements.BaseElement import BaseElement
+from log.Result import Result
 
 __author__ = 'nprikazchikov'
 
 
 class BasePage:
-    _element = BaseElement(**{By.XPATH: "//input", BaseElement.NAME: "Input"})
+    url = None
+    name = None
+    action_bot = None
+    verify_bot = None
 
-    _element2 = BaseElement(xpath="//input2", name="Input2")
+    # _element = BaseElement(**{By.XPATH: "//input",
+    # BaseElement.NAME: "Input"})
+    #
+    # _element2 = BaseElement(xpath="//input2", name="Input2")
 
     def __init__(self):
         self.init_elements()
+        self.action_bot = ActionBot()
+        self.verify_bot = VerifyBot()
         pass
 
     def get_element(self):
@@ -24,9 +34,17 @@ class BasePage:
     def init_elements(cls, parent=None):
         if parent is None \
             or not isinstance(parent, WebDriver) \
-            or not isinstance(
-                parent, WebElement):
+                or not isinstance(parent, WebElement):
             parent = ContextHolder.get_driver()
         for element in iter(cls.__dict__.iteritems()):
             if isinstance(element[1], BaseElement):
                 element[1].set_parent(parent)
+
+    def navigate(self):
+        if not self.url is None:
+            return self.action_bot.navigate(self.url)
+        else:
+            return Result(
+                "Page [{page}]URL is not provided. Can't navigate"
+                .format(page = self.__class__)
+                , False)

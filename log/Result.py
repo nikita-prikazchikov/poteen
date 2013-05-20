@@ -1,6 +1,6 @@
-from bots.baseBot import BaseBot
+import cgi
 from ContextHolder import ContextHolder
-from log.Screenshot import Screenshot
+from log.Screenshot import Screenshot, ScreenshotMaker
 from log.iResult import iResult
 from utils.Status import Status
 
@@ -14,7 +14,7 @@ class Result(iResult):
 
     def __init__(self, comment="", status=True):
         self.set_status(status)
-        self._comment = comment
+        self._comment = cgi.escape(comment, True)
 
     def i_passed(self):
         if self._status is Status.PASSED:
@@ -36,7 +36,7 @@ class Result(iResult):
             self._status = status
 
         if Status.is_failed(self._status) and not no_screenshot:
-            self._screenshot = BaseBot().take_screenshot(
+            self._screenshot = ScreenshotMaker().take_screenshot(
                 "Test suite: {}; Test case: {}; {}".format(
                     ContextHolder.get_test_suite(),
                     ContextHolder.get_test_case(),
@@ -45,11 +45,11 @@ class Result(iResult):
             )
 
     def __repr__(self):
-        str(self)
+        return str(self)
 
     def __str__(self):
-        return '{' + '"status":"{status}","comment":"{comment},' \
-                     '"images":"{images}"'.format(
+        return '{' + '"status":"{status}","comment":"{comment}",' \
+                     '"images":"[{images}]"'.format(
             status=self._status,
             comment=self._comment,
             images="" if not self._screenshot is None else str(
