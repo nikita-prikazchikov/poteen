@@ -279,7 +279,8 @@ class ActionBot(BaseBot):
 
     def set_value(self, web_element, value, name, _type="element"):
         return Result(
-            "Set {type} value [{name}]".format(type=_type, name=name),
+            "Set {type} [{name}] value [{value}]"
+            .format(type=_type, name=name,value=value),
             self._set_value(web_element, value)
         )
 

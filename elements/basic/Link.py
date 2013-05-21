@@ -4,10 +4,10 @@ from error import IllegalElementActionException
 __author__ = 'nprikazchikov'
 
 
-class Button(BaseElement):
+class Link(BaseElement):
     def __init__(self, *args, **kwargs):
         BaseElement.__init__(self, *args, **kwargs)
-        self._type = "button"
+        self._type = "link"
 
     def set_value(self, value):
         raise IllegalElementActionException(

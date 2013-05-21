@@ -1,4 +1,5 @@
 import cgi
+from error import TestExecutionRuntimeException
 from log.Result import Result
 from log.iResult import iResult
 from utils.Status import Status
@@ -7,13 +8,27 @@ __author__ = 'nprikazchikov'
 
 
 class ResultList(iResult):
+    __chain = []
+
     _comment = None
     _parent = None
     _elements = []
 
+    @classmethod
+    def add_chain_result_list(cls, result_list):
+        cls.__chain.append(result_list)
+
+    @classmethod
+    def clear_chain_result_list(cls):
+        cls.__chain = []
+
     def __init__(self, comment="", parent=None):
+        if not isinstance(comment, str):
+            comment = str(comment)
         self._comment = cgi.escape(comment, True)
         self._parent = parent
+        self._elements = []
+        ResultList.add_chain_result_list(self)
 
     def i_passed(self):
         if self.get_status() is Status.PASSED:
@@ -30,8 +45,10 @@ class ResultList(iResult):
     def get_comment(self):
         return self._comment
 
-    def push(self, result):
+    def push(self, result, blocking=True):
         self._elements.append(result)
+        if blocking and Status.is_failed(result.get_status()):
+            raise TestExecutionRuntimeException(str(result))
         return self
 
     def info(self, message):

@@ -1,6 +1,6 @@
 import cgi
 from ContextHolder import ContextHolder
-from log.Screenshot import Screenshot, ScreenshotMaker
+from log.Screenshot import ScreenshotMaker
 from log.iResult import iResult
 from utils.Status import Status
 
@@ -8,13 +8,14 @@ __author__ = 'nprikazchikov'
 
 
 class Result(iResult):
-    _comment = str
-    _screenshot = Screenshot
-    _status = str
+    _comment = None
+    _screenshot = None
+    _status = None
 
     def __init__(self, comment="", status=True):
-        self.set_status(status)
+        self._screenshot = None
         self._comment = cgi.escape(comment, True)
+        self.set_status(status)
 
     def i_passed(self):
         if self._status is Status.PASSED:
@@ -49,9 +50,11 @@ class Result(iResult):
 
     def __str__(self):
         return '{' + '"status":"{status}","comment":"{comment}",' \
-                     '"images":"[{images}]"'.format(
-            status=self._status,
-            comment=self._comment,
-            images="" if not self._screenshot is None else str(
-                self._screenshot)) + '}'
+                     '"images":"[{images}]"' \
+            .format(
+                status=self._status,
+                comment=self._comment,
+                images="" if self._screenshot is None else str(
+                    self._screenshot)
+            ) + '}'
 

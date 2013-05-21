@@ -51,4 +51,13 @@ class IllegalElementActionException(PoteenError):
         super(IllegalElementActionException, self).__init__(message)
 
 
+class TestExecutionRuntimeException(PoteenError):
+    """
+    Error to define blocking step of test execution
+    """
+
+    def __init__(self, message):
+        super(TestExecutionRuntimeException, self).__init__(message)
+
+
 
