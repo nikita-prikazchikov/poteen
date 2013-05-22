@@ -1,12 +1,12 @@
 import logging
 from selenium.common.exceptions import WebDriverException
 from selenium.webdriver.common.keys import Keys
-from ContextHolder import ContextHolder
-from bots.baseBot import BaseBot
-from bots.generic import switch_to_default_content
-from error import IllegalElementActionException
-from log.Result import Result
-from utils.Status import Status
+from .baseBot import BaseBot
+from .generic import switch_to_default_content
+from ..ContextHolder import ContextHolder
+from ..error import IllegalElementActionException
+from ..log.Result import Result
+from ..utils.Status import Status
 
 __author__ = 'nprikazchikov'
 
@@ -298,7 +298,7 @@ class ActionBot(BaseBot):
     def set_value(self, web_element, value, name, _type="element"):
         return Result(
             "Set {type} [{name}] value [{value}]"
-            .format(type=_type, name=name,value=value),
+            .format(type=_type, name=name, value=value),
             self._set_value(web_element, value)
         )
 

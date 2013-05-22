@@ -1,10 +1,10 @@
 from selenium.webdriver.common.by import By
-from bots.ActionBot import ActionBot
-from bots.VerifyBot import VerifyBot
-from error import ElementNotFoundException
-from log.Result import Result
-from log.ResultList import ResultList
-from utils.Status import Status
+from ..bots.ActionBot import ActionBot
+from ..bots.VerifyBot import VerifyBot
+from ..error import ElementNotFoundException
+from ..log.Result import Result
+from ..log.ResultList import ResultList
+from ..utils.Status import Status
 
 __author__ = 'nprikazchikov'
 

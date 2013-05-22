@@ -5,9 +5,9 @@ from selenium.common.exceptions import NoSuchElementException, \
     WebDriverException
 from selenium.webdriver.remote.webelement import WebElement
 
-from bots.generic import reset_implicitly_wait, set_implicitly_wait
-from ContextHolder import ContextHolder
-from log.Result import Result
+from .generic import reset_implicitly_wait, set_implicitly_wait
+from ..ContextHolder import ContextHolder
+from ..log.Result import Result
 
 
 __author__ = 'nprikazchikov'

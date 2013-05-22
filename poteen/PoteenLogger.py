@@ -1,4 +1,4 @@
-from log.ResultList import ResultList
+from .log.ResultList import ResultList
 
 __author__ = 'nprikazchikov'
 

@@ -1,4 +1,4 @@
-from elements.BaseElement import BaseElement
+from ..BaseElement import BaseElement
 
 __author__ = 'nprikazchikov'
 

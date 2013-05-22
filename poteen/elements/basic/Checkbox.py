@@ -1,7 +1,7 @@
-from elements.BaseElement import BaseElement
-from error import IllegalElementActionException
-from log.Result import Result
-from log.ResultList import ResultList
+from ..BaseElement import BaseElement
+from ...log.Result import Result
+from ...log.ResultList import ResultList
+from ...error import IllegalElementActionException
 
 __author__ = 'nprikazchikov'
 

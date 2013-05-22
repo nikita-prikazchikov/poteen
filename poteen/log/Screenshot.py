@@ -1,5 +1,5 @@
 from datetime import datetime
-from ContextHolder import ContextHolder
+from ..ContextHolder import ContextHolder
 
 __author__ = 'nprikazchikov'
 
@@ -30,7 +30,7 @@ class ScreenshotMaker:
         if ( ContextHolder.get_do_screenshot() ):
             working_dir = ContextHolder.get_workspace_path()
             path = "{path}{name}.png".format(
-                path="/result/images/",
+                path="/../result/images/",
                 name=datetime.now().strftime("%Y_%m_%d__%H_%M_%S"))
             if ContextHolder.get_driver().save_screenshot(working_dir + path):
                 return Screenshot(

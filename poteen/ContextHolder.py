@@ -2,7 +2,7 @@ import os
 import logging
 from selenium.webdriver.remote.webdriver import WebDriver
 from selenium.webdriver.common.action_chains import ActionChains
-from error import IllegalAssignmentError
+from .error import IllegalAssignmentError
 
 __author__ = 'nprikazchikov'
 

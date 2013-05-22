@@ -1,5 +1,5 @@
-from elements.BaseElement import BaseElement
-from error import IllegalElementActionException
+from ..BaseElement import BaseElement
+from ...error import IllegalElementActionException
 
 __author__ = 'nprikazchikov'
 

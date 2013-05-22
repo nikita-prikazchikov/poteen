@@ -1,7 +1,7 @@
 import logging
 import platform
 from selenium.webdriver.common.keys import Keys
-from ContextHolder import ContextHolder
+from ..ContextHolder import ContextHolder
 
 __author__ = 'nprikazchikov'
 
