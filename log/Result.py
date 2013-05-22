@@ -14,7 +14,7 @@ class Result(iResult):
 
     def __init__(self, comment="", status=True):
         self._screenshot = None
-        self._comment = cgi.escape(comment, True)
+        self._comment = cgi.escape(str(comment), True)
         self.set_status(status)
 
     def i_passed(self):

@@ -25,29 +25,51 @@ class VerifyBot(BaseBot):
 
     def verify_contains(self, expected, actual, name, _type="element"):
         status = actual.find(expected) != -1
-        return Result(
-            "{type} {name} value is{status} correct. Expected: [{expected}] "
-            "contains in: [{actual}]".format(
-                type=_type,
-                name=name,
-                status=self._not(status),
-                expected=expected,
-                actual=actual
+        if status:
+            return Result(
+                "{type} {name} value is{status} correct. Expected: [{"
+                "expected}] ".format(
+                    type=_type,
+                    name=name,
+                    status=self._not(status),
+                    expected=expected,
+                )
             )
-        )
+        else:
+            return Result(
+                "{type} {name} value is{status} correct. Expected: [{"
+                "expected}] contains in: [{actual}]".format(
+                    type=_type,
+                    name=name,
+                    status=self._not(status),
+                    expected=expected,
+                    actual=actual
+                )
+            )
 
     def verify_equal(self, expected, actual, name, _type="element"):
-        status = actual.find(expected) != -1
-        return Result(
-            "{type} {name} value is{status} correct. Expected: [{expected}] "
-            "current: [{actual}]".format(
-                type=_type,
-                name=name,
-                status=self._not(status),
-                expected=expected,
-                actual=actual
+        status = actual == expected
+        if status:
+            return Result(
+                "{type} {name} value is{status} correct. Expected: "
+                "[{expected}] ".format(
+                    type=_type,
+                    name=name,
+                    status=self._not(status),
+                    expected=expected
+                )
             )
-        )
+        else:
+            return Result(
+                "{type} {name} value is{status} correct. Expected: [{"
+                "expected}] current: [{actual}]".format(
+                    type=_type,
+                    name=name,
+                    status=self._not(status),
+                    expected=expected,
+                    actual=actual
+                )
+            )
 
     def verify_visibility(self, web_element, displayed, name, _type="element"):
         return self._verify_web_element_visibility(

@@ -35,9 +35,8 @@ class ElementNotFoundException(PoteenError):
     Button.click() throws this error in case element does not exist
     """
 
-    def __init__(self, name):
-        super(ElementNotFoundException, self).__init__(
-            "Element [{}] not found".format(name))
+    def __init__(self, message):
+        super(ElementNotFoundException, self).__init__(message)
 
 
 class IllegalElementActionException(PoteenError):

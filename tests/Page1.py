@@ -23,6 +23,11 @@ class FuelWebPage(BasePage):
               "contains(@class, 'clusterbox create-cluster')]",
         element_name="New environment")
 
+    errorElement = Link(
+        xpath="//div[@id='content']//div[@class='cluster-list']//div["
+              "contains(@class, 'clusterbox create-clusterdsfdfsfds')]",
+        element_name="Error element name")
+
     def __init__(self):
         BasePage.__init__(self)
         self.url = ""

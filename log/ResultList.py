@@ -15,8 +15,8 @@ class ResultList(iResult):
     _elements = []
 
     @classmethod
-    def add_chain_result_list(cls, result_list):
-        cls.__chain.append(result_list)
+    def add_chain_result_list(cls, i_result):
+        cls.__chain.append(i_result)
 
     @classmethod
     def clear_chain_result_list(cls):

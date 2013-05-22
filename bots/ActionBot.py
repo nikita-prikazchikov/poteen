@@ -197,7 +197,7 @@ class ActionBot(BaseBot):
         res = Result(
             "Click {type} [{name}] and wait loading"
             .format(type=_type, name=name),
-            self._clear_ctrl_a_del(web_element)
+            self._click(web_element)
         )
         self.wait_loading()
         return res
@@ -205,14 +205,14 @@ class ActionBot(BaseBot):
     def click_dom(self, web_element, name, _type="element"):
         return Result(
             "DOM Click {type} [{name}]".format(type=_type, name=name),
-            self._click(web_element)
+            self._click_dom(web_element)
         )
 
     def click_dom_and_wait(self, web_element, name, _type="element"):
         res = Result(
             "DOM Click {type} [{name}] and wait loading"
             .format(type=_type, name=name),
-            self._clear_ctrl_a_del(web_element)
+            self._click_dom(web_element)
         )
         self.wait_loading()
         return res
@@ -223,11 +223,29 @@ class ActionBot(BaseBot):
             self._click_context(web_element)
         )
 
+    def click_context_and_wait(self, web_element, name, _type="element"):
+        res = Result(
+            "Context click {type} [{name}] and wait loading"
+            .format(type=_type, name=name),
+            self._click_context(web_element)
+        )
+        self.wait_loading()
+        return res
+
     def double_click(self, web_element, name, _type="element"):
         return Result(
             "Click {type} [{name}]".format(type=_type, name=name),
             self._double_click(web_element)
         )
+
+    def double_click_and_wait(self, web_element, name, _type="element"):
+        res = Result(
+            "Click {type} [{name}] and wait loading"
+            .format(type=_type, name=name),
+            self._double_click(web_element)
+        )
+        self.wait_loading()
+        return res
 
     def drag_and_drop(self, web_element_source, web_element_target,
                       source_name, target_name):
