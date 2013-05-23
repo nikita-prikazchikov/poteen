@@ -22,6 +22,10 @@ class ResultList(iResult):
     def clear_chain_result_list(cls):
         cls.__chain = []
 
+    @classmethod
+    def get_chain_result_list(cls):
+        return cls.__chain
+
     def __init__(self, comment="", parent=None):
         if not isinstance(comment, str):
             comment = str(comment)

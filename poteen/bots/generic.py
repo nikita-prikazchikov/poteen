@@ -1,7 +1,9 @@
 import logging
 import platform
+from selenium import webdriver
 from selenium.webdriver.common.keys import Keys
 from ..ContextHolder import ContextHolder
+from ..error import PoteenError
 
 __author__ = 'nprikazchikov'
 
@@ -33,10 +35,42 @@ def set_implicitly_wait(
 
 
 def setup_logger():
-    logging.basicConfig(level=logging.DEBUG,
-                        format='%(asctime)s %(name)-12s %(levelname)-8s %('
-                               'message)s',
-                        datefmt='%m-%d %H:%M',
-                        # filename='/temp/myapp.log',
-                        # filemode='w'
+    logging.basicConfig(
+        level=logging.DEBUG,
+        format='%(asctime)s %(name)-12s %(levelname)-8s %('
+               'message)s',
+        datefmt='%m-%d %H:%M',
+        # filename='/temp/myapp.log',
+        # filemode='w'
     )
+
+
+def start_driver():
+    browser = ContextHolder.get_browser()
+
+    def start_chrome():
+        return webdriver.Chrome()
+
+    def start_firefox():
+        return webdriver.Firefox()
+
+    def start_iexplore():
+        return webdriver.Ie()
+
+    if browser == "firefox":
+        driver = start_firefox()
+    elif browser == "iexplore":
+        driver = start_iexplore()
+    elif browser == "chrome":
+        driver = start_chrome()
+    else:
+        raise PoteenError("Unexpected browser {}".format(str(browser)))
+
+    ContextHolder.set_driver(driver)
+    maximize_window()
+
+
+def close_driver():
+    if not ContextHolder.get_driver() is None:
+        ContextHolder.get_driver().quit()
+        ContextHolder.set_driver(None)

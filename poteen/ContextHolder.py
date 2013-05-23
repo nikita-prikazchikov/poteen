@@ -21,8 +21,10 @@ class ContextHolder:
     __base_url = None
     # Global flag to make or not to make screenshots
     __doScreenshot = bool
+    # Global flag to make or not to make screenshots
+    __do_html_report = False
     # Single presentation of driver for tests
-    __driver = WebDriver
+    __driver = None
     # Single presentation of ActionChains for current driver
     __actions = None
     # Name of current Test Suite
@@ -59,6 +61,17 @@ class ContextHolder:
             raise IllegalAssignmentError(value, bool)
 
     @classmethod
+    def get_do_report(cls):
+        return cls.__do_html_report
+
+    @classmethod
+    def set_do_report(cls, value):
+        if isinstance(value, bool):
+            cls.__do_html_report = value
+        else:
+            raise IllegalAssignmentError(value, bool)
+
+    @classmethod
     def get_driver(cls):
         return cls.__driver
 
@@ -67,6 +80,9 @@ class ContextHolder:
         if isinstance(value, WebDriver):
             cls.__driver = value
             cls.__actions = ActionChains(value)
+        elif value is None:
+            cls.__driver = None
+            cls.__actions = None
         else:
             raise IllegalAssignmentError(value, WebDriver)
 
@@ -117,3 +133,8 @@ class ContextHolder:
             cls.__base_url = value
         else:
             raise IllegalAssignmentError(value, str)
+
+    @classmethod
+    def load_defaults(cls):
+        cls.__browser = "firefox"
+        cls.__doScreenshot = True
