@@ -1,6 +1,7 @@
 from optparse import OptionGroup
 from nose.plugins import Plugin
 from ...ContextHolder import ContextHolder
+from ...error import PoteenError
 
 __author__ = 'nprikazchikov'
 
@@ -38,7 +39,13 @@ class PoteenRunnerPlugin(Plugin):
             dest="advance_report",
             default=False,
             help="Flag to say test engine to make advanced HTML report"
-                 "Most effecient with --make-screenshot"
+                 "Most efficient with --make-screenshot"
+        )
+        group.add_option(
+            "-u", "--url",
+            action="store",
+            dest="url",
+            help="basic project URL for testing"
         )
         parser.add_option_group(group)
 
@@ -55,6 +62,12 @@ class PoteenRunnerPlugin(Plugin):
         report = "advance_report"
         if hasattr(options, report):
             ContextHolder.set_do_report(getattr(options, report))
+
+        url = "url"
+        if hasattr(options, url):
+            ContextHolder.set_url(getattr(options, url))
+        else:
+            raise PoteenError("URL is not provided. Don't know what to test")
 
     def begin(self):
         pass
