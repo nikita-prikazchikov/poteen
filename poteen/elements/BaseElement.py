@@ -104,8 +104,26 @@ class BaseElement:
             _type=self._type
         )
 
-    def find(self, **kwargs):
-        pass
+    def find(self, *args, **kwargs):
+
+        if not hasattr(self, "name_template"):
+            self.name_template = self._element_name
+
+        try:
+            _value = self._value.format(*args, **kwargs)
+        except Exception:
+            _value = self._value
+
+        try:
+            self._element_name= self.name_template.format(*args, **kwargs)
+        except Exception:
+            self._element_name = self.name_template
+
+        self._element = ActionBot().find_element(
+            by=self._by,
+            value=_value,
+            parent=self._parent
+        )
 
     def get_element(self):
         """
