@@ -1,4 +1,6 @@
+from engine.poteen.utils.Status import Status
 from .log.ResultList import ResultList
+from .error import TestExecutionRuntimeException
 
 __author__ = 'nprikazchikov'
 
@@ -24,6 +26,8 @@ class PoteenLogger:
         cls.__current_test_cases.append(case)
 
     @classmethod
-    def info(cls, result):
+    def info(cls, result, blocking=True):
         cls.__current_log.append(result)
         ResultList.clear_chain_result_list()
+        if blocking and Status.is_failed(result.get_status()):
+            raise TestExecutionRuntimeException(str(result))
