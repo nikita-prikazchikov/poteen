@@ -1,5 +1,5 @@
-from engine.poteen.utils.Status import Status
-from .log.ResultList import ResultList
+from engine.poteen.utils.status import Status
+from .log.resultList import ResultList
 from .error import TestExecutionRuntimeException
 
 __author__ = 'nprikazchikov'

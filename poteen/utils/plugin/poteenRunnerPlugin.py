@@ -1,6 +1,6 @@
 from optparse import OptionGroup
 from nose.plugins import Plugin
-from ...ContextHolder import ContextHolder
+from ...contextHolder import ContextHolder
 from ...error import PoteenError
 
 __author__ = 'nprikazchikov'

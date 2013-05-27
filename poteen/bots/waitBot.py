@@ -4,7 +4,7 @@ import time
 from selenium.common.exceptions import TimeoutException, WebDriverException
 from selenium.webdriver.support.wait import WebDriverWait
 
-from ..ContextHolder import ContextHolder
+from ..contextHolder import ContextHolder
 from .baseBot import BaseBot
 
 

@@ -1,7 +1,7 @@
 import logging
 from .baseBot import BaseBot
-from ..log.Result import Result
-from ..utils.Status import Status
+from ..log.result import Result
+from ..utils.status import Status
 
 __author__ = 'nprikazchikov'
 

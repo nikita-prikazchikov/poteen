@@ -1,8 +1,8 @@
 import cgi
 from .iResult import iResult
-from .Result import Result
+from .result import Result
 from ..error import TestExecutionRuntimeException
-from ..utils.Status import Status
+from ..utils.status import Status
 
 __author__ = 'nprikazchikov'
 

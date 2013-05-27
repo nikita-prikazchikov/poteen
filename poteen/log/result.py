@@ -1,8 +1,8 @@
 import cgi
 from .iResult import iResult
-from .Screenshot import ScreenshotMaker
-from ..ContextHolder import ContextHolder
-from ..utils.Status import Status
+from .screenshot import ScreenshotMaker
+from ..contextHolder import ContextHolder
+from ..utils.status import Status
 
 __author__ = 'nprikazchikov'
 

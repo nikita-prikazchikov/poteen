@@ -1,11 +1,11 @@
 from selenium.webdriver.remote.webdriver import WebDriver
 from selenium.webdriver.remote.webelement import WebElement
-from .ContextHolder import ContextHolder
-from .bots.ActionBot import ActionBot
-from .bots.VerifyBot import VerifyBot
-from .bots.WaitBot import WaitBot
+from .contextHolder import ContextHolder
+from .bots.actionBot import ActionBot
+from .bots.verifyBot import VerifyBot
+from .bots.waitBot import WaitBot
 from .elements.BaseElement import BaseElement
-from .log.Result import Result
+from .log.result import Result
 
 __author__ = 'nprikazchikov'
 

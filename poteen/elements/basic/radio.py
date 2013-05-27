@@ -1,18 +1,19 @@
-from ..BaseElement import BaseElement
-from ...log.Result import Result
-from ...log.ResultList import ResultList
-from ...error import IllegalElementActionException
+from ..baseElement import BaseElement
+from ...log.result import Result
+from ...log.resultList import ResultList
+
+from poteen.error import IllegalElementActionException
 
 __author__ = 'nprikazchikov'
 
 
-class Checkbox(BaseElement):
+class Radio(BaseElement):
     VALUE_ON = "on"
     VALUE_OFF = "off"
 
     def __init__(self, *args, **kwargs):
         BaseElement.__init__(self, *args, **kwargs)
-        self._type = "checkbox"
+        self._type = "radiobutton"
 
     def __check_value(self, value):
         if isinstance(value, bool):
@@ -20,8 +21,10 @@ class Checkbox(BaseElement):
 
         if not (value == self.VALUE_ON or value == self.VALUE_OFF):
             IllegalElementActionException(
-                "Unexpected checkbox value. Please use {} or {} constants from"
-                " checkbox class or bool".format(self.VALUE_ON, self.VALUE_OFF)
+                "Unexpected radiobutton value. Please use {} or {} constants"
+                " from checkbox class or bool".format(
+                    self.VALUE_ON, self.VALUE_OFF
+                )
             )
         return value
 
@@ -33,7 +36,7 @@ class Checkbox(BaseElement):
     def set_value(self, value):
         value = self.__check_value(value)
 
-        res = ResultList("Set checkbox [{}] to: [{}]".format(
+        res = ResultList("Set radiobutton [{}] to: [{}]".format(
             self._element_name, value
         ))
         if not self.get_value() == value:
@@ -41,7 +44,7 @@ class Checkbox(BaseElement):
         else:
             res.push(
                 Result(
-                    "The checkbox [{}] already set to: [{}]".format(
+                    "The radiobutton [{}] already set to: [{}]".format(
                         self._element_name,
                         value
                     )

@@ -2,7 +2,7 @@ import logging
 import platform
 from selenium import webdriver
 from selenium.webdriver.common.keys import Keys
-from ..ContextHolder import ContextHolder
+from ..contextHolder import ContextHolder
 from ..error import PoteenError
 
 __author__ = 'nprikazchikov'

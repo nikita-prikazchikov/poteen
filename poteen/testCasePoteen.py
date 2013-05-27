@@ -1,6 +1,6 @@
 from unittest import TestCase
-from .log.ResultList import ResultList
-from .PoteenLogger import PoteenLogger
+from .log.resultList import ResultList
+from .poteenLogger import PoteenLogger
 from .bots.generic import start_driver, close_driver
 
 __author__ = 'nprikazchikov'

@@ -3,10 +3,10 @@ from selenium.common.exceptions import WebDriverException
 from selenium.webdriver.common.keys import Keys
 from .baseBot import BaseBot
 from .generic import switch_to_default_content
-from ..ContextHolder import ContextHolder
+from ..contextHolder import ContextHolder
 from ..error import IllegalElementActionException
-from ..log.Result import Result
-from ..utils.Status import Status
+from ..log.result import Result
+from ..utils.status import Status
 
 __author__ = 'nprikazchikov'
 

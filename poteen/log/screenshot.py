@@ -1,5 +1,5 @@
 from datetime import datetime
-from ..ContextHolder import ContextHolder
+from ..contextHolder import ContextHolder
 
 __author__ = 'nprikazchikov'
 

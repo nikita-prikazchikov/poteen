@@ -1,10 +1,10 @@
 from selenium.webdriver.common.by import By
 
-from .HtmlElement import HtmlElement
-from ..BaseElement import BaseElement
+from .htmlElement import HtmlElement
+from ..baseElement import BaseElement
 from ...error import PoteenError
-from ...log.Result import Result
-from ...log.ResultList import ResultList
+from ...log.result import Result
+from ...log.resultList import ResultList
 
 __author__ = 'nprikazchikov'
 
