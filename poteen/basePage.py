@@ -4,7 +4,7 @@ from .contextHolder import ContextHolder
 from .bots.actionBot import ActionBot
 from .bots.verifyBot import VerifyBot
 from .bots.waitBot import WaitBot
-from .elements.BaseElement import BaseElement
+from .elements.baseElement import BaseElement
 from .log.result import Result
 
 __author__ = 'nprikazchikov'
