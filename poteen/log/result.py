@@ -33,6 +33,8 @@ class Result(iResult):
 
         if isinstance(status, bool):
             self._status = Status.PASSED if status else Status.FAILED
+        elif status is None:
+            self._status = Status.FAILED
         else:
             self._status = status
 
