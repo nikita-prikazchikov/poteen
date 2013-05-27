@@ -16,9 +16,10 @@ class BasePage:
     _action_bot = ActionBot()
     _verify_bot = VerifyBot()
     _wait_bot = WaitBot(ContextHolder.DEFAULT_WEBDRIVER_IMPLICITLY_WAIT_TIME)
+    _parent = None
 
     def __init__(self, parent=None):
-        self.init_elements(parent)
+        self._parent = self.init_elements(parent)
 
     @classmethod
     def get_action_bot(cls):
@@ -34,13 +35,16 @@ class BasePage:
 
     @classmethod
     def init_elements(cls, parent=None):
-        if parent is None \
-            or not isinstance(parent, WebDriver) \
-            or not isinstance(parent, WebElement):
+        if parent is None or not \
+            (isinstance(parent, WebDriver) or isinstance(parent, WebElement)):
             parent = ContextHolder.get_driver()
         for element in iter(cls.__dict__.iteritems()):
             if isinstance(element[1], BaseElement):
                 element[1].set_parent(parent)
+        if len(cls.__bases__) != 0:
+            for base in cls.__bases__:
+                base.init_elements(parent=parent)
+        return parent
 
     def navigate(self):
         if not self.url is None:

@@ -2,7 +2,7 @@ from ..baseElement import BaseElement
 from ...log.result import Result
 from ...log.resultList import ResultList
 
-from poteen.error import IllegalElementActionException
+from ...error import IllegalElementActionException
 
 __author__ = 'nprikazchikov'
 

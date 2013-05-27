@@ -40,9 +40,9 @@ class BaseElement:
                 self._element = value
         pass
 
-    @classmethod
-    def set_parent(cls, parent):
-        cls._parent = parent
+    # @classmethod
+    def set_parent(self, parent):
+        self._parent = parent
 
     def _get_possible_set(self):
         return {By.ID, By.XPATH, By.CLASS_NAME, By.CSS_SELECTOR, By.LINK_TEXT,
@@ -124,6 +124,7 @@ class BaseElement:
             value=_value,
             parent=self._parent
         )
+        return self
 
     def get_element(self):
         """
@@ -137,7 +138,7 @@ class BaseElement:
                 parent=self._parent)
             if not self.is_found():
                 message = \
-                    "{} [{}] not found By.{}:{}".format(
+                    "{} [{}] not found By.{}:\"{}\"".format(
                         self._type,
                         self._element_name,
                         self._by,

@@ -68,6 +68,10 @@ def start_driver():
 
     ContextHolder.set_driver(driver)
     maximize_window()
+    driver = ContextHolder.get_driver()
+    driver.set_page_load_timeout(
+        ContextHolder.DEFAULT_WEBDRIVER_WAIT_LOAD_TIMEOUT)
+    set_implicitly_wait(ContextHolder.DEFAULT_WEBDRIVER_IMPLICITLY_WAIT_TIME)
 
 
 def close_driver():
