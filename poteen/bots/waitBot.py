@@ -24,7 +24,9 @@ class WaitBot(BaseBot):
             timeout = self._timeout
         return WebDriverWait(ContextHolder.get_driver(), timeout)
 
-    def _wait_for(self, condition, timeout=5):
+    def _wait_for(self, condition, timeout=None):
+        if timeout is None:
+            timeout = self._timeout
         try:
             result = self._get_driver_wait(timeout).until(condition)
         except TimeoutException:
