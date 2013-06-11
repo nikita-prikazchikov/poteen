@@ -156,6 +156,9 @@ class BaseElement:
     def is_found(self):
         return not self._element is None
 
+    def is_not_found(self):
+        return self._element is None
+
     def set_value(self, value):
         return ActionBot().set_value(
             web_element=self.get_element(),
