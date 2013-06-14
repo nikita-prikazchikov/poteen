@@ -59,4 +59,3 @@ class Result(iResult):
                 images="" if self._screenshot is None else str(
                     self._screenshot)
             ) + '}'
-

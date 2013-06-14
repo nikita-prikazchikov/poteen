@@ -57,6 +57,3 @@ class TestExecutionRuntimeException(PoteenError):
 
     def __init__(self, message):
         super(TestExecutionRuntimeException, self).__init__(message)
-
-
-

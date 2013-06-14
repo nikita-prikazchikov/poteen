@@ -73,9 +73,7 @@ class PoteenRunnerPlugin(Plugin):
         pass
 
     def finalize(self, result):
-        print "Plugin finalize"
         pass
 
     def beforeTest(self, test):
-        print "Plugin before test"
         pass

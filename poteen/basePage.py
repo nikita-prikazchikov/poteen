@@ -37,8 +37,9 @@ class BasePage:
         return cls._verify_bot
 
     def init_instance_elements(self, parent=None):
-        if parent is None or not \
-            (isinstance(parent, WebDriver) or isinstance(parent, WebElement)):
+        if parent is None \
+            or not (isinstance(parent, WebDriver)
+                    or isinstance(parent, WebElement)):
             parent = ContextHolder.get_driver()
         for element in iter(self.__dict__.iteritems()):
             if isinstance(element[1], BaseElement):
@@ -47,8 +48,9 @@ class BasePage:
 
     @classmethod
     def init_class_elements(cls, parent=None):
-        if parent is None or not \
-            (isinstance(parent, WebDriver) or isinstance(parent, WebElement)):
+        if parent is None \
+            or not (isinstance(parent, WebDriver)
+                    or isinstance(parent, WebElement)):
             parent = ContextHolder.get_driver()
         for element in iter(cls.__dict__.iteritems()):
             if isinstance(element[1], BaseElement):
@@ -65,5 +67,6 @@ class BasePage:
         else:
             return Result(
                 "Page [{page}]URL is not provided. Can't navigate"
-                .format(page=self.__class__)
-                , False)
+                .format(page=self.__class__),
+                False
+            )

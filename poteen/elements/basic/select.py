@@ -26,11 +26,10 @@ class Select(BaseElement):
         try:
             option = HtmlElement(element=self.get_element().find_element(
                 By.XPATH, "//option[contains(text(),'{}')]".format(value)),
-                                 element_name="option [{}]".format(value))
+                element_name="option [{}]".format(value)
+            )
             res.push(option.click())
             res.push(self.verify_value(value), False)
         except PoteenError, e:
             res.push(Result(e.message, False))
         return res
-        
-    

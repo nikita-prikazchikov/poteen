@@ -16,4 +16,3 @@ class HtmlElement(BaseElement):
         raise IllegalElementActionException(
             "Unable to set value for {}".format(self._element_name)
         )
-

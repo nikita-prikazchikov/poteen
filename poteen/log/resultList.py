@@ -68,10 +68,10 @@ class ResultList(iResult):
             self._elements,
             ""
         )
-        return '{' + '"status":"{status}","comment":"{comment}",' \
-                     'children:[{children}]' \
-            .format(
-            status=self.get_status(),
-            comment=self._comment,
-            children=children[1:]
-        ) + '}'
+        _str = '"status":"{status}","comment":"{comment}", ' \
+               'children:[{children}]'.format(
+               status=self.get_status(),
+               comment=self._comment,
+               children=children[1:]
+               )
+        return '{' + _str + '}'

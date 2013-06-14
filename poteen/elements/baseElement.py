@@ -115,7 +115,7 @@ class BaseElement:
             _value = self._value
 
         try:
-            self._element_name= self.name_template.format(*args, **kwargs)
+            self._element_name = self.name_template.format(*args, **kwargs)
         except Exception:
             self._element_name = self.name_template
 

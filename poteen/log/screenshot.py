@@ -27,7 +27,7 @@ class ScreenshotMaker:
         flag has to be set to True in ContextHolder
         :return: Screenshot|None
         """
-        if ( ContextHolder.get_do_screenshot() ):
+        if (ContextHolder.get_do_screenshot()):
             working_dir = ContextHolder.get_workspace_path()
             path = "{path}{name}.png".format(
                 path="/../result/images/",
