@@ -161,6 +161,13 @@ class BaseElement:
     def is_not_found(self):
         return self._element is None
 
+    def is_visible(self):
+        return ActionBot().is_element_displayed(self.get_element())
+
+    def has_attribute(self, attribute_name, attribute_value):
+        return \
+            self.get_element().get_attribute(attribute_name) == attribute_value
+
     def set_value(self, value):
         return ActionBot().set_value(
             web_element=self.get_element(),
@@ -181,6 +188,23 @@ class BaseElement:
         return VerifyBot().verify_contains(
             expected=value,
             actual=self.get_value(),
+            name=self._element_name,
+            _type=self._type
+        )
+
+    def verify_visible(self, visible=True):
+        return VerifyBot().verify_visibility(
+            web_element=self.get_element(),
+            displayed=visible,
+            name=self._element_name,
+            _type=self._type
+        )
+
+    def verify_attribute(self, attribute_name, attribute_value):
+        return VerifyBot().verify_contains_attribute(
+            web_element=self.get_element(),
+            attribute_name=attribute_name,
+            attribute_value=attribute_value,
             name=self._element_name,
             _type=self._type
         )

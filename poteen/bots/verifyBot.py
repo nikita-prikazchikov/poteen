@@ -98,3 +98,23 @@ class VerifyBot(BaseBot):
             name,
             _type
         )
+
+    def verify_contains_attribute(self, web_element, attribute_name,
+                                  attribute_value, name, _type="element"):
+        logger.debug("Verify {type} {name} has attribute {attr}:{val}".format(
+            type=_type,
+            name=name,
+            attr=attribute_name,
+            val=attribute_value
+        ))
+        status = web_element.get_attribute(attribute_name) == attribute_value
+        return Result(
+            "{type} {name} does{status} have attribute {attr}:{val}"
+            .format(
+                type=_type,
+                name=name,
+                status=self._not(status),
+                attr=attribute_name,
+                val=attribute_value
+            )
+        )
