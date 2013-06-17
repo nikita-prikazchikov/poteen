@@ -1,4 +1,3 @@
-import logging
 from selenium.common.exceptions import WebDriverException
 from selenium.webdriver.common.keys import Keys
 from .baseBot import BaseBot
@@ -10,13 +9,14 @@ from ..utils.status import Status
 
 __author__ = 'nprikazchikov'
 
-logger = logging.getLogger("bots.ActionBot")
+logger = ContextHolder.get_logger()
 
 
 class ActionBot(BaseBot):
     def _clear(self, web_element):
         status = Status.FAILED
         try:
+            logger.debug("Clean web element")
             if self.is_element_displayed(web_element):
                 web_element.clear()
                 status = Status.PASSED
@@ -27,6 +27,7 @@ class ActionBot(BaseBot):
     def _clear_ctrl_a_del(self, web_element):
         status = Status.FAILED
         try:
+            logger.debug("Clean web element with Ctrl+A -> Delete")
             if self.is_element_displayed(web_element):
                 ContextHolder.get_action_chain() \
                     .key_down(Keys.CONTROL, web_element) \
@@ -46,6 +47,7 @@ class ActionBot(BaseBot):
         """
         status = Status.FAILED
         try:
+            logger.debug("Click web element")
             if self.is_element_displayed(web_element):
                 web_element.click()
                 status = Status.PASSED
@@ -56,6 +58,7 @@ class ActionBot(BaseBot):
     def _click_dom(self, web_element):
         status = Status.FAILED
         try:
+            logger.debug("Click DOM web element")
             if self.is_element_displayed(web_element):
                 ContextHolder.get_action_chain().click(web_element).perform()
                 status = Status.PASSED
@@ -66,6 +69,7 @@ class ActionBot(BaseBot):
     def _click_context(self, web_element):
         status = Status.FAILED
         try:
+            logger.debug("Context click web element")
             if self.is_element_displayed(web_element):
                 ContextHolder.get_action_chain().context_click(
                     web_element).perform()
@@ -77,6 +81,7 @@ class ActionBot(BaseBot):
     def _double_click(self, web_element):
         status = Status.FAILED
         try:
+            logger.debug("Double click web element")
             if self.is_element_displayed(web_element):
                 ContextHolder.get_action_chain().double_click(
                     web_element).perform()
@@ -88,6 +93,10 @@ class ActionBot(BaseBot):
     def _drag_and_drop(self, web_element_source, web_element_target):
         status = Status.FAILED
         try:
+            logger.debug("Drad and drop {element} on {element2}".format(
+                element=web_element_source,
+                element2=web_element_target
+            ))
             if self.is_element_displayed(
                     web_element_source) and self.is_element_displayed(
                     web_element_target):
@@ -101,6 +110,11 @@ class ActionBot(BaseBot):
     def _drag_and_drop_by_offset(self, web_element_source, x_offset, y_offset):
         status = Status.FAILED
         try:
+            logger.debug("Drag {element} on x:{x} y:{y}".format(
+                element=web_element_source,
+                x=x_offset,
+                y=y_offset
+            ))
             if self.is_element_displayed(web_element_source):
                 ContextHolder.get_action_chain() \
                     .drag_and_drop_by_offset(web_element_source, x_offset,
@@ -133,6 +147,9 @@ class ActionBot(BaseBot):
     def _send_keys(self, web_element, value):
         status = Status.FAILED
         try:
+            logger.debug("Send keys {value}".format(
+                value=value
+            ))
             if self.is_element_displayed(web_element):
                 web_element.send_keys(value)
                 status = Status.PASSED
@@ -144,6 +161,7 @@ class ActionBot(BaseBot):
         status = Status.FAILED
         try:
             self.wait_for_time(0.5)
+            logger.debug("Alert accept")
             alert = ContextHolder.get_driver().switch_to_alert()
             text = "Accept: {}".format(alert.text())
             alert.accept()
@@ -161,6 +179,7 @@ class ActionBot(BaseBot):
         status = Status.FAILED
         try:
             self.wait_for_time(0.5)
+            logger.debug("Alert dismiss")
             alert = ContextHolder.get_driver().switch_to_alert()
             text = "Dismiss: {}".format(alert.text())
             alert.dismiss()

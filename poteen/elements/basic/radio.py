@@ -1,10 +1,13 @@
 from ..baseElement import BaseElement
+from ...contextHolder import ContextHolder
 from ...log.result import Result
 from ...log.resultList import ResultList
 
 from ...error import IllegalElementActionException
 
 __author__ = 'nprikazchikov'
+
+logger = ContextHolder.get_logger()
 
 
 class Radio(BaseElement):

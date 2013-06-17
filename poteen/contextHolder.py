@@ -6,15 +6,12 @@ from .error import IllegalAssignmentError
 
 __author__ = 'nprikazchikov'
 
-logging.basicConfig(
-    format='%(asctime)s %(name)-12s %(levelname)-8s %(''message)s',
-    datefmt='%m-%d %H:%M'
-)
-
 
 class ContextHolder:
     DEFAULT_WEBDRIVER_IMPLICITLY_WAIT_TIME = 5
     DEFAULT_WEBDRIVER_WAIT_LOAD_TIMEOUT = 30
+
+    LOG_LEVEL = logging.INFO
 
     # Base site URL for testing
     __base_url = None
@@ -34,6 +31,8 @@ class ContextHolder:
     __browser = None
     #Path to current working folder
     __workspacePath = None
+
+    logger = None
 
     @classmethod
     def get_workspace_path(cls):
@@ -137,3 +136,20 @@ class ContextHolder:
     def load_defaults(cls):
         cls.__browser = "firefox"
         cls.__doScreenshot = True
+
+    @classmethod
+    def get_logger(cls):
+
+        if cls.logger is None:
+            formatter = logging.Formatter(
+                fmt='%(asctime)s - %(levelname)s %(filename)s:'
+                    '%(lineno)d -- %(message)s')
+
+            handler = logging.StreamHandler()
+            handler.setFormatter(formatter)
+
+            logger = logging.getLogger("poteen")
+            logger.setLevel(cls.LOG_LEVEL)
+            logger.addHandler(handler)
+            cls.logger = logger
+        return cls.logger

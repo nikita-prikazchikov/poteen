@@ -10,7 +10,7 @@ from .baseBot import BaseBot
 
 __author__ = 'nprikazchikov'
 
-logger = logging.getLogger("bots.WaitBot")
+logger = ContextHolder.get_logger()
 
 
 class WaitBot(BaseBot):
@@ -32,17 +32,18 @@ class WaitBot(BaseBot):
 
     def _wait_for(self, condition, timeout=None):
         timeout = self._get_timeout(timeout)
+        logger.debug(
+            "Waiting for {action}; "
+            "Parameters: {parameters}".format(
+                action=self._actionName,
+                parameters=self._parameters
+            )
+        )
         try:
             result = self._get_driver_wait(timeout).until(condition)
         except TimeoutException:
             result = None
-            logger.debug(
-                "Waiting for {action} failed. Timeout exception. "
-                "Parameters: {parameters}".format(
-                    action=self._actionName,
-                    parameters=self._parameters
-                )
-            )
+            logger.error("Waiting failed. Timeout exception")
         except WebDriverException, e:
             logger.error(repr(e))
             result = None

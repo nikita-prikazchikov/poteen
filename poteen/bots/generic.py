@@ -7,54 +7,51 @@ from ..error import PoteenError
 
 __author__ = 'nprikazchikov'
 
+logger = ContextHolder.get_logger()
+
 
 def switch_to_default_content():
     ContextHolder.get_driver().switch_to_default_content()
 
 
 def maximize_window():
+    logger.info("maximize driver window")
     ContextHolder.get_driver().maximize_window()
     os = platform.uname()[0].lower()
     if os.find('windows') != -1:
         action = ContextHolder.get_action_chain()
-        action \
-            .send_keys(Keys.F11) \
-            .perform()
+        action.send_keys(Keys.F11).perform()
         pass
     elif os.find('linux') != -1:
+        action = ContextHolder.get_action_chain()
+        action.send_keys(Keys.F11).perform()
         pass
 
 
 def reset_implicitly_wait():
+    logger.debug("Reset implicitly wait")
     ContextHolder.get_driver().implicitly_wait(0)
 
 
 def set_implicitly_wait(
         timeout=ContextHolder.DEFAULT_WEBDRIVER_IMPLICITLY_WAIT_TIME):
+    logger.debug("Set implicitly wait: {}".format(timeout))
     ContextHolder.get_driver().implicitly_wait(timeout)
-
-
-def setup_logger():
-    logging.basicConfig(
-        level=logging.DEBUG,
-        format='%(asctime)s %(name)-12s %(levelname)-8s %('
-               'message)s',
-        datefmt='%m-%d %H:%M',
-        # filename='/temp/myapp.log',
-        # filemode='w'
-    )
 
 
 def start_driver():
     browser = ContextHolder.get_browser()
 
     def start_chrome():
+        logger.info("Start chrome")
         return webdriver.Chrome()
 
     def start_firefox():
+        logger.info("Start firefox")
         return webdriver.Firefox()
 
     def start_iexplore():
+        logger.info("Start IE")
         return webdriver.Ie()
 
     if browser == "firefox":
@@ -76,5 +73,6 @@ def start_driver():
 
 def close_driver():
     if not ContextHolder.get_driver() is None:
+        logger.info("Close driver")
         ContextHolder.get_driver().quit()
         ContextHolder.set_driver(None)

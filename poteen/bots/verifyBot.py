@@ -1,11 +1,12 @@
 import logging
 from .baseBot import BaseBot
+from ..contextHolder import ContextHolder
 from ..log.result import Result
 from ..utils.status import Status
 
 __author__ = 'nprikazchikov'
 
-logger = logging.getLogger("bots.VerifyBot")
+logger = ContextHolder.get_logger()
 
 
 class VerifyBot(BaseBot):
@@ -14,6 +15,11 @@ class VerifyBot(BaseBot):
 
     def _verify_web_element_visibility(self, expected, actual, name,
                                        _type="element"):
+        logger.debug("Verify {type} [{name}] is{status} visible".format(
+            type=_type,
+            name=name,
+            status=self._not(actual)
+        ))
         return Result(
             "{type} [{name}] is{status} visible".format(
                 type=_type,
@@ -24,6 +30,13 @@ class VerifyBot(BaseBot):
         )
 
     def verify_contains(self, expected, actual, name, _type="element"):
+        logger.debug("Verify {type} {name} value. Expected: "
+                     "[{expected}] contains in: [{actual}]".format(
+                         type=_type,
+                         name=name,
+                         expected=expected,
+                         actual=actual
+                     ))
         status = actual.find(expected) != -1
         if status:
             return Result(
@@ -48,6 +61,13 @@ class VerifyBot(BaseBot):
             )
 
     def verify_equal(self, expected, actual, name, _type="element"):
+        logger.debug("Verify {type} {name} value. Expected: "
+                     "[{expected}] equals: [{actual}]".format(
+                         type=_type,
+                         name=name,
+                         expected=expected,
+                         actual=actual
+                     ))
         status = actual == expected
         if status:
             return Result(

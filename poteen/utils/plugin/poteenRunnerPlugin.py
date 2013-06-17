@@ -4,6 +4,7 @@ from ...contextHolder import ContextHolder
 from ...error import PoteenError
 
 __author__ = 'nprikazchikov'
+logger = ContextHolder.get_logger()
 
 
 class PoteenRunnerPlugin(Plugin):

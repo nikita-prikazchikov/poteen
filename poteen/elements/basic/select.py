@@ -1,4 +1,5 @@
 from selenium.webdriver.common.by import By
+from ...contextHolder import ContextHolder
 
 from .htmlElement import HtmlElement
 from ..baseElement import BaseElement
@@ -7,6 +8,8 @@ from ...log.result import Result
 from ...log.resultList import ResultList
 
 __author__ = 'nprikazchikov'
+
+logger = ContextHolder.get_logger()
 
 
 class Select(BaseElement):

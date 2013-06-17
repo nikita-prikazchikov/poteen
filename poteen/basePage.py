@@ -8,6 +8,7 @@ from .elements.baseElement import BaseElement
 from .log.result import Result
 
 __author__ = 'nprikazchikov'
+logger = ContextHolder.get_logger()
 
 
 class BasePage:

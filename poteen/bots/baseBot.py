@@ -1,4 +1,3 @@
-import logging
 import time
 
 from selenium.common.exceptions import NoSuchElementException, \
@@ -12,7 +11,7 @@ from ..log.result import Result
 
 __author__ = 'nprikazchikov'
 
-logger = logging.getLogger("bots.baseBot")
+logger = ContextHolder.get_logger()
 
 
 class BaseBot:
@@ -23,9 +22,15 @@ class BaseBot:
         if parent is None:
             parent = ContextHolder.get_driver()
         try:
+            logger.debug("Find element by: {by}; value: {value}".format(
+                by=by,
+                value=value
+            ))
             element = parent.find_element(by, value)
         except NoSuchElementException, e:
-            logger.debug("Element not found")
+            logger.debug("Element not found by: {by}; value: {value};"
+                         " parent: {parent}".format(
+                         by=by, value=value, parent=parent))
         except WebDriverException, e:
             logger.error(str(e))
         finally:
@@ -37,9 +42,15 @@ class BaseBot:
         if parent is None:
             parent = ContextHolder.get_driver()
         try:
+            logger.debug("Find elements by: {by}; value: {value}".format(
+                by=by,
+                value=value
+            ))
             element = parent.find_elements(by, value)
         except NoSuchElementException, e:
-            logger.debug("Element not found")
+            logger.debug("Elements not found by: {by}; value: {value};"
+                         " parent: {parent}".format(
+                         by=by, value=value, parent=parent))
         except WebDriverException, e:
             logger.error(str(e))
         finally:
@@ -63,10 +74,11 @@ class BaseBot:
         return elements
 
     def is_element_displayed(self, element=None):
-
+        res = False
         if isinstance(element, WebElement):
-            return element.is_displayed()
-        return False
+            res = element.is_displayed()
+        logger.debug("Element " + "visible" if res else "not visible")
+        return res
 
     def is_displayed(self, by, value, parent=None):
 

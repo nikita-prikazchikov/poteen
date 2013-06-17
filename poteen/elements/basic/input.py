@@ -1,6 +1,9 @@
 from ..baseElement import BaseElement
+from ...contextHolder import ContextHolder
 
 __author__ = 'nprikazchikov'
+
+logger = ContextHolder.get_logger()
 
 
 class Input(BaseElement):

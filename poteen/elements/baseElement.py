@@ -1,12 +1,14 @@
 from selenium.webdriver.common.by import By
 from ..bots.actionBot import ActionBot
 from ..bots.verifyBot import VerifyBot
+from ..contextHolder import ContextHolder
 from ..error import ElementNotFoundException
 from ..log.result import Result
 from ..log.resultList import ResultList
 from ..utils.status import Status
 
 __author__ = 'nprikazchikov'
+logger = ContextHolder.get_logger()
 
 
 class BaseElement:
