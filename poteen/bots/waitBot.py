@@ -18,7 +18,8 @@ class WaitBot(BaseBot):
     _actionName = ""
     _parameters = ""
 
-    def __init__(self, timeout):
+    def __init__(self,
+                 timeout=ContextHolder.DEFAULT_WEBDRIVER_IMPLICITLY_WAIT_TIME):
         self._timeout = timeout
 
     def _get_driver_wait(self, timeout=None):
