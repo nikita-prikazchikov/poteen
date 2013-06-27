@@ -69,7 +69,7 @@ class ResultList(iResult):
             ""
         )
         _str = '"status":"{status}","comment":"{comment}", ' \
-               'children:[{children}]'.format(
+               '"children":[{children}]'.format(
                status=self.get_status(),
                comment=self._comment,
                children=children[1:]
