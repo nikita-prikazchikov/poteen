@@ -40,7 +40,7 @@ class WaitBot(BaseBot):
 
     def _wait_for(self, condition, timeout=None, poll_frequency=None):
         timeout = self._get_timeout(timeout)
-        poll_frequency=self._get_poll_frequency(poll_frequency)
+        poll_frequency = self._get_poll_frequency(poll_frequency)
         logger.debug(
             "Waiting for {action}; "
             "Parameters: {parameters}".format(
