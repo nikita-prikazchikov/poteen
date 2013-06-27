@@ -34,8 +34,12 @@ class BaseBot:
             logger.debug("Element not found by: {by}; value: {value};"
                          " parent: {parent}".format(
                          by=by, value=value, parent=parent))
+        except StaleElementReferenceException, e:
+            logger.debug("Raising StaleElementReferenceException "
+                         "in find_element")
+            raise e
         except WebDriverException, e:
-            logger.error(str(e))
+            logger.error(repr(e) + " " + str(e))
         finally:
             return element
 
