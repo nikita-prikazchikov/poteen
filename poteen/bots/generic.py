@@ -29,13 +29,15 @@ def maximize_window():
 
 
 def reset_implicitly_wait():
-    logger.debug("Reset implicitly wait")
+    # logger.debug("Reset implicitly wait")
+    ContextHolder.implicitly_wait = 0
     ContextHolder.get_driver().implicitly_wait(0)
 
 
 def set_implicitly_wait(
         timeout=ContextHolder.DEFAULT_WEBDRIVER_IMPLICITLY_WAIT_TIME):
-    logger.debug("Set implicitly wait: {}".format(timeout))
+    # logger.debug("Set implicitly wait: {}".format(timeout))
+    ContextHolder.implicitly_wait = timeout
     ContextHolder.get_driver().implicitly_wait(timeout)
 
 

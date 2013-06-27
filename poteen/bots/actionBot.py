@@ -311,7 +311,7 @@ class ActionBot(BaseBot):
             ContextHolder.get_driver().get(url)
             status = Status.PASSED
         except WebDriverException, e:
-            logger.error(repr(e))
+            logger.error("{} {}".format(repr(e), str(e)))
         return Result(message, status)
 
     def set_value(self, web_element, value, name, _type="element"):

@@ -32,6 +32,8 @@ class ContextHolder:
     #Path to current working folder
     __workspacePath = None
 
+    implicitly_wait = 5
+
     logger = None
 
     @classmethod

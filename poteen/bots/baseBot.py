@@ -1,7 +1,7 @@
 import time
 
 from selenium.common.exceptions import NoSuchElementException, \
-    WebDriverException
+    WebDriverException, StaleElementReferenceException
 from selenium.webdriver.remote.webelement import WebElement
 
 from .generic import reset_implicitly_wait, set_implicitly_wait
@@ -22,10 +22,13 @@ class BaseBot:
         if parent is None:
             parent = ContextHolder.get_driver()
         try:
-            logger.debug("Find element by: {by}; value: {value}".format(
-                by=by,
-                value=value
-            ))
+            logger.debug(
+                "Find element by: {by}; value: {value}; timeout: {time}"
+                .format(
+                    by=by,
+                    value=value,
+                    time=ContextHolder.implicitly_wait
+                ))
             element = parent.find_element(by, value)
         except NoSuchElementException, e:
             logger.debug("Element not found by: {by}; value: {value};"
@@ -75,9 +78,16 @@ class BaseBot:
 
     def is_element_displayed(self, element=None):
         res = False
-        if isinstance(element, WebElement):
-            res = element.is_displayed()
-        logger.debug("Element " + "visible" if res else "not visible")
+        try:
+            if isinstance(element, WebElement):
+                res = element.is_displayed()
+            logger.debug("Element " + "visible" if res else "not visible")
+        except StaleElementReferenceException, e:
+            logger.debug(
+                "StaleElementReferenceException catched. "
+                "Element is no longer attached to DOM and not visible"
+            )
+            res = False
         return res
 
     def is_displayed(self, by, value, parent=None):
