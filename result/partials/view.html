@@ -1,0 +1,41 @@
+<div class="container-fluid">
+    <div class="row-fluid">
+        <h3>Test cycle test results</h3>
+        <div class="row-fluid">
+            <div class="span3">
+                <table class="table table-bordered table-condensed centered">
+                    <thead>
+                    <tr>
+                        <th>Status</th>
+                        <th>Count</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr ng-repeat="status in statusList">
+                        <td class="left-aligned">{{ status }}</td>
+                        <td ng-click="showDetails(status, null)">{{ (testCaseList | filter:{status:status}).length }}</td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        <div class="row-fluid">
+            <h4>Test suites</h4>
+            <table class="table table-bordered table-condensed table-hover centered">
+                <tr>
+                    <th rowspan="2">Test suite</th>
+                    <th colspan="{{(statusList).length }}">Result</th>
+                </tr>
+                <tr>
+                    <th ng-repeat="status in statusList">{{ status }}</th>
+                </tr>
+                <tr ng-repeat="testCase in testCaseList | unique:'test_suite_name' | orderBy:'test_suite_name'">
+                    <td class="left-aligned" ng-click="showDetails(null, testCase.test_suite_name)">{{ testCase.test_suite_name }}</td>
+                    <td ng-repeat="status in statusList" ng-click="showDetails(status, testCase.test_suite_name)">
+                        {{ (testCaseList | filter:{status:status,test_suite_name:testCase.test_suite_name}).length}}
+                    </td>
+                </tr>
+            </table>
+        </div>
+    </div>
+</div>

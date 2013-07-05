@@ -1,6 +1,7 @@
 from optparse import OptionGroup
 from nose.plugins import Plugin
 from ...contextHolder import ContextHolder
+from engine.poteen.poteenLogger import PoteenLogger
 from ...error import PoteenError
 
 __author__ = 'nprikazchikov'
@@ -71,10 +72,16 @@ class PoteenRunnerPlugin(Plugin):
             raise PoteenError("URL is not provided. Don't know what to test")
 
     def begin(self):
+        PoteenLogger.collect_test_result()
         pass
 
     def finalize(self, result):
-        pass
+        if ContextHolder.get_do_report():
+            PoteenLogger.collect_test_result()
 
     def beforeTest(self, test):
         pass
+
+    def afterTest(self, test):
+        if ContextHolder.get_do_report():
+            PoteenLogger.save_test_case_to_file()

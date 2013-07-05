@@ -1,4 +1,4 @@
-import cgi
+import json
 from .iResult import iResult
 from .screenshot import ScreenshotMaker
 from ..contextHolder import ContextHolder
@@ -9,12 +9,12 @@ __author__ = 'nprikazchikov'
 
 class Result(iResult):
     _comment = None
-    _screenshot = None
+    _files = []
     _status = None
 
     def __init__(self, comment="", status=True):
-        self._screenshot = None
-        self._comment = cgi.escape(str(comment), True)
+        self._files = []
+        self._comment = str(comment)
         self.set_status(status)
 
     def i_passed(self):
@@ -39,23 +39,28 @@ class Result(iResult):
             self._status = status
 
         if Status.is_failed(self._status) and not no_screenshot:
-            self._screenshot = ScreenshotMaker().take_screenshot(
+            self._files.append(ScreenshotMaker().take_screenshot(
                 "Test suite: {}; Test case: {}; {}".format(
                     ContextHolder.get_test_suite(),
                     ContextHolder.get_test_case(),
                     self._comment
                 )
-            )
+            ))
+
+    def _get_files_as_object(self):
+        res = []
+        for element in self._files:
+            res.append(element.json())
+        return res
 
     def __repr__(self):
         return str(self)
 
     def __str__(self):
-        return '{' + '"status":"{status}","comment":"{comment}",' \
-                     '"images":"[{images}]"' \
-            .format(
-                status=self._status,
-                comment=self._comment,
-                images="" if self._screenshot is None else str(
-                    self._screenshot)
-            ) + '}'
+        return json.dumps(
+            {
+                "status": self._status,
+                "comment": self._comment,
+                "files": self._get_files_as_object()
+            }
+        )
