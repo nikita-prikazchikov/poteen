@@ -1,5 +1,5 @@
 <script type="text/ng-template" id="testStepTemplate">
-    <div class="span12 header {{ testCase.status == 'passed' | getResult:'text-success':'text-error' }}">
+    <div class="span12 header {{ testStep.status == 'passed' | getResult:'text-success':'text-error' }}">
         <div class="span11">
             <strong>{{ $index + 1 }}. {{ testStep.comment }}</strong>
             <div ng-include="'fileTemplate'" ng-repeat="file in testStep.files"></div>
