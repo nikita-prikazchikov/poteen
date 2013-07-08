@@ -41,7 +41,7 @@ class ScreenshotMaker:
                 path="/../result/images/",
                 name=name)
             if ContextHolder.get_driver().save_screenshot(working_dir + path):
-                return Screenshot(message, "/images/{name}.png".format(
+                return Screenshot(message, "images/{name}.png".format(
                     name=name
                 ))
             else:
