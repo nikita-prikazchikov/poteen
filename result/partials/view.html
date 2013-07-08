@@ -13,7 +13,7 @@
                     <tbody>
                     <tr ng-repeat="status in statusList">
                         <td class="left-aligned">{{ status }}</td>
-                        <td ng-click="showDetails(status, null)">{{ (testCaseList | filter:{status:status}).length }}</td>
+                        <td class="pointer" ng-click="showDetails(status, null)">{{ (testCaseList | filter:{status:status}).length }}</td>
                     </tr>
                     </tbody>
                 </table>
@@ -30,8 +30,8 @@
                     <th ng-repeat="status in statusList">{{ status }}</th>
                 </tr>
                 <tr ng-repeat="testCase in testCaseList | unique:'test_suite_name' | orderBy:'test_suite_name'">
-                    <td class="left-aligned" ng-click="showDetails(null, testCase.test_suite_name)">{{ testCase.test_suite_name }}</td>
-                    <td ng-repeat="status in statusList" ng-click="showDetails(status, testCase.test_suite_name)">
+                    <td class="left-aligned pointer" ng-click="showDetails(null, testCase.test_suite_name)">{{ testCase.test_suite_name }}</td>
+                    <td class="pointer" ng-repeat="status in statusList" ng-click="showDetails(status, testCase.test_suite_name)">
                         {{ (testCaseList | filter:{status:status,test_suite_name:testCase.test_suite_name}).length}}
                     </td>
                 </tr>
