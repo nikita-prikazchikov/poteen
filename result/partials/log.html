@@ -19,10 +19,12 @@
 
 <script type="text/ng-template" id="testStepDetailsTemplate">
     <div class="row-fluid {{ element.status == 'passed' | getResult:' ':'text-error' }}">
-        <span class="label {{ testStep.status == 'passed' | getResult:'label-success':'label-important' }}">
-        <i class="icon-white {{ testStep.status == 'passed' | getResult:'icon-ok':'icon-remove' }}"></i></span>:
+        {{ $index + 1 }}.
+        <span class="label {{ element.status == 'passed' | getResult:'label-success':'label-important' }}">
+            <i class="icon-white {{ element.status == 'passed' | getResult:'icon-ok':'icon-remove' }}"></i></span>
         <span>{{ element.comment }}</span>
         <div ng-include="'fileTemplate'" ng-repeat="file in element.files"></div>
+        <div style="padding-left: 20px;" ng-include="'testStepDetailsTemplate'" ng-repeat="element in element.children"></div>
     </div>
 </script>
 
