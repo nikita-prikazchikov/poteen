@@ -22,7 +22,8 @@ class PoteenRunnerPlugin(Plugin):
             "-b", "--browser",
             action="store",
             type="choice",
-            choices=["iexplore", "chrome", "firefox"],
+            choices=["iexplore", "chrome", "firefox", "remote_firefox",
+                     "remote_iexplore", "remote_chrome"],
             dest="browser",
             default="firefox",
             help="Specify BROWSER for tests"
@@ -48,6 +49,13 @@ class PoteenRunnerPlugin(Plugin):
             dest="url",
             help="basic project URL for testing"
         )
+        group.add_option(
+            "-r", "--remote-executor",
+            action="store",
+            dest="remote_executor",
+            default="http://127.0.0.1:4444/wd/hub",
+            help="Specify URL for connecting to remote WebDriver "
+        )
         parser.add_option_group(group)
 
     def configure(self, options, conf):
@@ -63,6 +71,11 @@ class PoteenRunnerPlugin(Plugin):
         report = "advance_report"
         if hasattr(options, report):
             ContextHolder.set_do_report(getattr(options, report))
+
+        remote_executor = "remote_executor"
+        if hasattr(options, remote_executor):
+            ContextHolder.set_remote_executor(
+                getattr(options, remote_executor))
 
         url = "url"
         if hasattr(options, url):

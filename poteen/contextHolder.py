@@ -31,6 +31,8 @@ class ContextHolder:
     __browser = None
     #Path to current working folder
     __workspacePath = None
+    # URL for connecting to remote WebDriver
+    __remote_executor = 'http://127.0.0.1:4444/wd/hub'
 
     implicitly_wait = 5
 
@@ -155,3 +157,14 @@ class ContextHolder:
             logger.addHandler(handler)
             cls.logger = logger
         return cls.logger
+
+    @classmethod
+    def get_remote_executor(cls):
+        return cls.__remote_executor
+
+    @classmethod
+    def set_remote_executor(cls, value):
+        if isinstance(value, str):
+            cls.__remote_executor = value
+        else:
+            raise IllegalAssignmentError(value, str)
