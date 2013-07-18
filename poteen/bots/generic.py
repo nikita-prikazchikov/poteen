@@ -1,6 +1,7 @@
 import logging
 import platform
 from selenium import webdriver
+from selenium.webdriver import DesiredCapabilities
 from selenium.webdriver.common.keys import Keys
 from ..contextHolder import ContextHolder
 from ..error import PoteenError
@@ -56,12 +57,26 @@ def start_driver():
         logger.info("Start IE")
         return webdriver.Ie()
 
+    def start_remote_driver(desired_capabilities):
+        logger.info("Remote driver {desired_capabilities}".format(
+            desired_capabilities=desired_capabilities))
+        remote_executor = ContextHolder.get_remote_executor()
+        return webdriver.Remote(
+            command_executor=remote_executor,
+            desired_capabilities=desired_capabilities)
+
     if browser == "firefox":
         driver = start_firefox()
     elif browser == "iexplore":
         driver = start_iexplore()
     elif browser == "chrome":
         driver = start_chrome()
+    elif browser == "remote_firefox":
+        driver = start_remote_driver(DesiredCapabilities.FIREFOX)
+    elif browser == "remote_iexplore":
+        driver = start_remote_driver(DesiredCapabilities.INTERNETEXPLORER)
+    elif browser == "remote_chrome":
+        driver = start_remote_driver(DesiredCapabilities.CHROME)
     else:
         raise PoteenError("Unexpected browser {}".format(str(browser)))
 
