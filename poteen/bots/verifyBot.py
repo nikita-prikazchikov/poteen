@@ -57,7 +57,8 @@ class VerifyBot(BaseBot):
                     status=self._not(status),
                     expected=expected,
                     actual=actual
-                )
+                ),
+                Status.FAILED
             )
 
     def verify_equal(self, expected, actual, name, _type="element"):
@@ -88,7 +89,8 @@ class VerifyBot(BaseBot):
                     status=self._not(status),
                     expected=expected,
                     actual=actual
-                )
+                ),
+                Status.FAILED
             )
 
     def verify_visibility(self, web_element, displayed, name, _type="element"):
