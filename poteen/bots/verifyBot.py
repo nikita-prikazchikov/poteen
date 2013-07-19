@@ -1,7 +1,6 @@
-import logging
+
 from .baseBot import BaseBot
 from ..contextHolder import ContextHolder
-from engine.poteen.error import ElementNotFoundException
 from ..log.result import Result
 from ..utils.status import Status
 
@@ -102,18 +101,6 @@ class VerifyBot(BaseBot):
             _type
         )
 
-    def verify_exists_and_visible(self, element, exists_and_visible, name, _type="element"):
-        try:
-            web_element = element.get_element()
-        except ElementNotFoundException:
-            pass
-        return self._verify_web_element_visibility(
-            exists_and_visible,
-            'web_element' in locals() and self.is_element_displayed(web_element),
-            name,
-            _type
-        )
-
     def verify_contains_attribute(self, web_element, attribute_name,
                                   attribute_value, name, _type="element"):
         logger.debug("Verify {type} {name} has attribute {attr}:{val}".format(
@@ -133,3 +120,7 @@ class VerifyBot(BaseBot):
             ),
             status
         )
+
+    def verify_disabled(self, web_element, value, name):
+        return self.verify_contains_attribute(
+            web_element, "disabled", value, name)
