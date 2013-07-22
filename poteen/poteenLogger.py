@@ -98,7 +98,7 @@ class PoteenLogger:
         for i, fileName in enumerate(files):
             _file = open(sourcePath + fileName, "r")
             resultFile.write(_file.read())
-            if i != len(files)-1:
+            if i != len(files) - 1:
                 resultFile.write(",")
             _file.close()
         resultFile.write("]")
