@@ -1,4 +1,4 @@
-import logging
+
 from .baseBot import BaseBot
 from ..contextHolder import ContextHolder
 from ..log.result import Result
@@ -15,7 +15,7 @@ class VerifyBot(BaseBot):
 
     def _verify_web_element_visibility(self, expected, actual, name,
                                        _type="element"):
-        logger.debug("Verify {type} [{name}] is{status} visible".format(
+        logger.debug("Verify {type} [{name}] is {status} visible".format(
             type=_type,
             name=name,
             status=self._not(actual)
@@ -120,3 +120,7 @@ class VerifyBot(BaseBot):
             ),
             status
         )
+
+    def verify_disabled(self, web_element, value, name):
+        return self.verify_contains_attribute(
+            web_element, "disabled", value, name)
