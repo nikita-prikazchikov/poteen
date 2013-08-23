@@ -18,9 +18,10 @@ class Select(BaseElement):
         self._type = "select"
 
     def get_value(self):
-        return self.get_element().find_element(
-            By.CSS_SELECTOR, "option:checked"
-        ).text
+        options = self.get_element().find_elements(By.CSS_SELECTOR, "option")
+        for option in options:
+            if option.is_selected():
+                return option.text
 
     def set_value(self, value):
         res = ResultList("Set select [{}] value: [{}]".format(
