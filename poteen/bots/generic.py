@@ -71,6 +71,10 @@ def start_driver():
         driver = start_iexplore()
     elif browser == "chrome":
         driver = start_chrome()
+    elif browser == "html_unit":
+        driver = start_remote_driver(DesiredCapabilities.HTMLUNIT)
+    elif browser == "phantomjs":
+        driver = start_remote_driver(DesiredCapabilities.PHANTOMJS)
     elif browser == "remote_firefox":
         driver = start_remote_driver(DesiredCapabilities.FIREFOX)
     elif browser == "remote_iexplore":

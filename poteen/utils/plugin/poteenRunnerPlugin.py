@@ -23,8 +23,8 @@ class PoteenRunnerPlugin(Plugin):
             "-b", "--browser",
             action="store",
             type="choice",
-            choices=["iexplore", "chrome", "firefox", "remote_firefox",
-                     "remote_iexplore", "remote_chrome"],
+            choices=["html_unit", "phantomjs", "iexplore", "chrome", "firefox",
+                     "remote_firefox", "remote_iexplore", "remote_chrome"],
             dest="browser",
             default="firefox",
             help="Specify BROWSER for tests"
