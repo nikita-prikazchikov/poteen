@@ -77,11 +77,11 @@ class PoteenLogger:
                     "status": status,
                     "log": str(cls.__current_log),
                     "start_time": datetime.datetime.fromtimestamp(
-                        cls.__startTime).strftime('%Y-%m-%d %H:%M:%S'),
+                        cls._get_start_time()).strftime('%Y-%m-%d %H:%M:%S'),
                     "end_time": str(
                         datetime.datetime.fromtimestamp(time.time())
                         .strftime('%Y-%m-%d %H:%M:%S')),
-                    "execution_time": time.time() - cls.__startTime
+                    "execution_time": time.time() - cls._get_start_time()
                 }
             )
         )
@@ -103,3 +103,9 @@ class PoteenLogger:
             _file.close()
         resultFile.write("]")
         resultFile.close()
+
+    @classmethod
+    def _get_start_time(cls):
+        return cls.__startTime \
+            if cls.__startTime is not None \
+            else time.time()
