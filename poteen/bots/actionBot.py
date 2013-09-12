@@ -13,22 +13,22 @@ logger = ContextHolder.get_logger()
 
 
 class ActionBot(BaseBot):
-    def _clear(self, web_element):
+    def _clear(self, web_element, invisible=False):
         status = Status.FAILED
         try:
             logger.debug("Clean web element")
-            if self.is_element_displayed(web_element):
+            if invisible or self.is_element_displayed(web_element):
                 web_element.clear()
                 status = Status.PASSED
         except WebDriverException, e:
             logger.error(str(e))
         return status
 
-    def _clear_ctrl_a_del(self, web_element):
+    def _clear_ctrl_a_del(self, web_element, invisible=False):
         status = Status.FAILED
         try:
             logger.debug("Clean web element with Ctrl+A -> Delete")
-            if self.is_element_displayed(web_element):
+            if invisible or self.is_element_displayed(web_element):
                 ContextHolder.get_action_chain() \
                     .key_down(Keys.CONTROL, web_element) \
                     .send_keys_to_element(web_element, "a") \
@@ -40,7 +40,7 @@ class ActionBot(BaseBot):
             logger.error(str(e))
         return status
 
-    def _click(self, web_element):
+    def _click(self, web_element, invisible=False):
         """
         :param web_element: Web element
         :return: string from Status
@@ -48,29 +48,29 @@ class ActionBot(BaseBot):
         status = Status.FAILED
         try:
             logger.debug("Click web element")
-            if self.is_element_displayed(web_element):
+            if invisible or self.is_element_displayed(web_element):
                 web_element.click()
                 status = Status.PASSED
         except WebDriverException, e:
             logger.error(str(e))
         return status
 
-    def _click_dom(self, web_element):
+    def _click_dom(self, web_element, invisible=False):
         status = Status.FAILED
         try:
             logger.debug("Click DOM web element")
-            if self.is_element_displayed(web_element):
+            if invisible or self.is_element_displayed(web_element):
                 ContextHolder.get_action_chain().click(web_element).perform()
                 status = Status.PASSED
         except WebDriverException, e:
             logger.error(str(e))
         return status
 
-    def _click_context(self, web_element):
+    def _click_context(self, web_element, invisible=False):
         status = Status.FAILED
         try:
             logger.debug("Context click web element")
-            if self.is_element_displayed(web_element):
+            if invisible or self.is_element_displayed(web_element):
                 ContextHolder.get_action_chain().context_click(
                     web_element).perform()
                 status = Status.PASSED
@@ -78,11 +78,11 @@ class ActionBot(BaseBot):
             logger.error(str(e))
         return status
 
-    def _double_click(self, web_element):
+    def _double_click(self, web_element, invisible=False):
         status = Status.FAILED
         try:
             logger.debug("Double click web element")
-            if self.is_element_displayed(web_element):
+            if invisible or self.is_element_displayed(web_element):
                 ContextHolder.get_action_chain().double_click(
                     web_element).perform()
                 status = Status.PASSED
@@ -90,16 +90,17 @@ class ActionBot(BaseBot):
             logger.error(str(e))
         return status
 
-    def _drag_and_drop(self, web_element_source, web_element_target):
+    def _drag_and_drop(self, web_element_source, web_element_target,
+                       invisible=False):
         status = Status.FAILED
         try:
             logger.debug("Drad and drop {element} on {element2}".format(
                 element=web_element_source,
                 element2=web_element_target
             ))
-            if self.is_element_displayed(
-                    web_element_source) and self.is_element_displayed(
-                    web_element_target):
+            if invisible or (
+                    self.is_element_displayed(web_element_source) and
+                    self.is_element_displayed(web_element_target)):
                 ContextHolder.get_action_chain().drag_and_drop(
                     web_element_source, web_element_target).perform()
                 status = Status.PASSED
@@ -107,7 +108,8 @@ class ActionBot(BaseBot):
             logger.error(str(e))
         return status
 
-    def _drag_and_drop_by_offset(self, web_element_source, x_offset, y_offset):
+    def _drag_and_drop_by_offset(self, web_element_source, x_offset, y_offset,
+                                 invisible=False):
         status = Status.FAILED
         try:
             logger.debug("Drag {element} on x:{x} y:{y}".format(
@@ -115,7 +117,7 @@ class ActionBot(BaseBot):
                 x=x_offset,
                 y=y_offset
             ))
-            if self.is_element_displayed(web_element_source):
+            if invisible or self.is_element_displayed(web_element_source):
                 ContextHolder.get_action_chain() \
                     .drag_and_drop_by_offset(web_element_source, x_offset,
                                              y_offset).perform()
@@ -124,10 +126,10 @@ class ActionBot(BaseBot):
             logger.error(str(e))
         return status
 
-    def _set_value(self, web_element, value):
+    def _set_value(self, web_element, value, invisible=False):
         status = Status.FAILED
         try:
-            if self.is_element_displayed(web_element):
+            if invisible or self.is_element_displayed(web_element):
                 web_element.clear()
                 web_element.send_keys(value)
                 status = Status.PASSED
@@ -135,22 +137,22 @@ class ActionBot(BaseBot):
             logger.error(str(e))
         return status
 
-    def _is_selected(self, web_element):
+    def _is_selected(self, web_element, invisible=False):
         status = None
         try:
-            if self.is_element_displayed(web_element):
+            if invisible or self.is_element_displayed(web_element):
                 status = web_element.is_selected()
         except WebDriverException, e:
             logger.error(str(e))
         return status
 
-    def _send_keys(self, web_element, value):
+    def _send_keys(self, web_element, value, invisible=False):
         status = Status.FAILED
         try:
             logger.debug("Send keys {value}".format(
                 value=value
             ))
-            if self.is_element_displayed(web_element):
+            if invisible or self.is_element_displayed(web_element):
                 web_element.send_keys(value)
                 status = Status.PASSED
         except WebDriverException, e:
@@ -193,89 +195,97 @@ class ActionBot(BaseBot):
 
         return Result(text, status)
 
-    def clear(self, web_element, name):
+    def clear(self, web_element, name, invisible=False):
         return Result(
             "Clear element [{name}]".format(name=name),
-            self._clear(web_element)
+            self._clear(web_element, invisible)
         )
 
-    def clear_ctrl_a_del(self, web_element, name):
+    def clear_ctrl_a_del(self, web_element, name, invisible=False):
         return Result(
             "Clear element [{name}] by pressing {}"
             .format("{CTRL}+A -> {DELETE}", name=name),
-            self._clear_ctrl_a_del(web_element)
+            self._clear_ctrl_a_del(web_element, invisible)
         )
 
-    def click(self, web_element, name, _type="element"):
+    def click(self, web_element, name, _type="element", invisible=False):
         return Result(
             "Click {type} [{name}]".format(type=_type, name=name),
-            self._click(web_element)
+            self._click(web_element, invisible)
         )
 
-    def click_and_wait(self, web_element, name, _type="element"):
+    def click_and_wait(self, web_element, name, _type="element",
+                       invisible=False):
         res = Result(
             "Click {type} [{name}] and wait loading"
             .format(type=_type, name=name),
-            self._click(web_element)
+            self._click(web_element, invisible)
         )
         self.wait_loading()
         return res
 
-    def click_dom(self, web_element, name, _type="element"):
+    def click_dom(self, web_element, name, _type="element", invisible=False):
         return Result(
             "DOM Click {type} [{name}]".format(type=_type, name=name),
-            self._click_dom(web_element)
+            self._click_dom(web_element, invisible)
         )
 
-    def click_dom_and_wait(self, web_element, name, _type="element"):
+    def click_dom_and_wait(self, web_element, name, _type="element",
+                           invisible=False):
         res = Result(
             "DOM Click {type} [{name}] and wait loading"
             .format(type=_type, name=name),
-            self._click_dom(web_element)
+            self._click_dom(web_element, invisible)
         )
         self.wait_loading()
         return res
 
-    def click_context(self, web_element, name, _type="element"):
+    def click_context(self, web_element, name, _type="element",
+                      invisible=False):
         return Result(
             "Context click {type} [{name}]".format(type=_type, name=name),
-            self._click_context(web_element)
+            self._click_context(web_element, invisible)
         )
 
-    def click_context_and_wait(self, web_element, name, _type="element"):
+    def click_context_and_wait(self, web_element, name, _type="element",
+                               invisible=False):
         res = Result(
             "Context click {type} [{name}] and wait loading"
             .format(type=_type, name=name),
-            self._click_context(web_element)
+            self._click_context(web_element, invisible)
         )
         self.wait_loading()
         return res
 
-    def double_click(self, web_element, name, _type="element"):
+    def double_click(self, web_element, name, _type="element",
+                     invisible=False):
         return Result(
             "Click {type} [{name}]".format(type=_type, name=name),
-            self._double_click(web_element)
+            self._double_click(web_element, invisible)
         )
 
-    def double_click_and_wait(self, web_element, name, _type="element"):
+    def double_click_and_wait(self, web_element, name, _type="element",
+                              invisible=False):
         res = Result(
             "Click {type} [{name}] and wait loading"
             .format(type=_type, name=name),
-            self._double_click(web_element)
+            self._double_click(web_element, invisible)
         )
         self.wait_loading()
         return res
 
     def drag_and_drop(self, web_element_source, web_element_target,
-                      source_name, target_name):
+                      source_name, target_name, invisible=False):
         return Result(
             "Drag and drop element [{source}] on [{target}]"
             .format(source=source_name, target=target_name),
-            self._drag_and_drop(web_element_source, web_element_target)
+            self._drag_and_drop(
+                web_element_source, web_element_target, invisible)
         )
 
     def drag_and_drop_by_offset(self, web_element_source, x_offset, y_offset,
-                                source_name, target_name="target"):
+                                source_name, target_name="target",
+                                invisible=False):
         return Result(
             "Drag and drop element [{source}] on [{target}] X:{x} Y:{y}"
             .format(
@@ -285,17 +295,17 @@ class ActionBot(BaseBot):
                 y=y_offset
             ),
             self._drag_and_drop_by_offset(web_element_source, x_offset,
-                                          y_offset)
+                                          y_offset, invisible)
         )
 
-    def is_selected(self, web_element, name):
+    def is_selected(self, web_element, name, invisible=False):
         """
         :param web_element:
         :param name:
         :return: bool
         :raise: IllegalElementActionException
         """
-        res = self._is_selected(web_element)
+        res = self._is_selected(web_element, invisible)
         if res is None:
             raise IllegalElementActionException(
                 "Checkbox [{name}] has illegal value or invisible value"
@@ -314,15 +324,17 @@ class ActionBot(BaseBot):
             logger.error("{} {}".format(repr(e), str(e)))
         return Result(message, status)
 
-    def set_value(self, web_element, value, name, _type="element"):
+    def set_value(self, web_element, value, name, _type="element",
+                  invisible=False):
         return Result(
             "Set {type} [{name}] value [{value}]"
             .format(type=_type, name=name, value=value),
-            self._set_value(web_element, value)
+            self._set_value(web_element, value, invisible)
         )
 
-    def send_keys(self, web_element, value, name, _type="element"):
+    def send_keys(self, web_element, value, name, _type="element",
+                  invisible=False):
         return Result(
             "Send to {type} keys [{name}]".format(type=_type, name=name),
-            self._send_keys(web_element, value)
+            self._send_keys(web_element, value, invisible)
         )
